@@ -10,15 +10,13 @@
     <title>sAnimator</title>
     <link rel="icon" type="image/png" href="./assets/icon-192.png" />
     <link rel="apple-touch-icon" href="./assets/icon-192.png" />
-    <script type="module" crossorigin src="./app/index-CznFAHl7.js"></script>
-    <link rel="stylesheet" crossorigin href="./app/index-DIqg0wEz.css">
+    <script type="module" crossorigin src="./app/index-D-WOwaw1.js"></script>
+    <link rel="stylesheet" crossorigin href="./app/index-DHvhmzBh.css">
   <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
   <body>
     <div id="notices" class="notices" role="status"></div>
 
-    <button id="menu-button" type="button" class="menu-button" aria-label="Menu" aria-expanded="false">
-      <span aria-hidden="true">☰</span>
-    </button>
+    <button id="menu-button" type="button" class="menu-button" data-icon="menu" aria-label="Menu" aria-expanded="false"></button>
 
     <main>
       <section id="tab-lines" class="tab tab-lines" hidden>
@@ -28,7 +26,7 @@
         <div class="recorder">
           <div class="row status-row">
             <p id="lines-status" class="status" role="status"></p>
-            <button id="lines-undo" type="button" class="btn" hidden>Undo</button>
+            <button id="lines-undo" type="button" class="btn icon-btn" data-icon="undo" aria-label="Undo" hidden></button>
           </div>
           <div class="faces">
             <button id="face-A" type="button" class="face">
@@ -58,14 +56,21 @@
             <div id="cast" class="cast">
               <label id="pick-A" class="cast-photo A" aria-label="Pick a photo for the left character">
                 <input id="file-A" class="visually-hidden" type="file" accept="image/*" />
-                <span id="plus-A" class="cast-plus" aria-hidden="true">+</span>
+                <span id="plus-A" class="cast-plus" data-icon="plus"></span>
               </label>
               <label id="pick-B" class="cast-photo B" aria-label="Pick a photo for the right character">
                 <input id="file-B" class="visually-hidden" type="file" accept="image/*" />
-                <span id="plus-B" class="cast-plus" aria-hidden="true">+</span>
+                <span id="plus-B" class="cast-plus" data-icon="plus"></span>
               </label>
-              <button id="edit-A" type="button" class="cast-name A" aria-label="Change the left character's name and colour"></button>
-              <button id="edit-B" type="button" class="cast-name B" aria-label="Change the right character's name and colour"></button>
+              <!-- The pencil says the name can be changed. It is on the screen only, never in the video. -->
+              <button id="edit-A" type="button" class="cast-name A" aria-label="Change the left character's name and colour">
+                <span id="cast-empty-A" class="cast-empty" hidden>Name</span>
+                <span class="cast-pencil" data-icon="pencil"></span>
+              </button>
+              <button id="edit-B" type="button" class="cast-name B" aria-label="Change the right character's name and colour">
+                <span id="cast-empty-B" class="cast-empty" hidden>Name</span>
+                <span class="cast-pencil" data-icon="pencil"></span>
+              </button>
             </div>
           </div>
         </div>
@@ -84,8 +89,8 @@
     </main>
 
     <nav class="tabs" aria-label="Sections">
-      <button id="nav-lines" type="button" data-tab="lines">Lines</button>
-      <button id="nav-preview" type="button" data-tab="preview">Preview</button>
+      <button id="nav-lines" type="button" data-tab="lines" data-icon="clapper" aria-label="Lines"></button>
+      <button id="nav-preview" type="button" data-tab="preview" data-icon="reel" aria-label="Preview"></button>
     </nav>
 
     <!-- The menu: everything that is used rarely. -->
@@ -111,6 +116,8 @@
         <button id="speech-toggle" type="button" class="btn sheet-item" aria-pressed="false">Speech-to-text: off</button>
         <button id="reset" type="button" class="btn danger sheet-item">Reset project</button>
         <button id="menu-close" type="button" class="btn primary sheet-item">Close</button>
+        <!-- For finding a fault on a phone: which build this is, how the microphone started, what the last video held. -->
+        <p id="about" class="about"><span id="about-build"></span><span id="about-mic"></span><span id="about-video"></span></p>
       </div>
     </div>
 
