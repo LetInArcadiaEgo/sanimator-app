@@ -10,56 +10,20 @@
     <title>sAnimator</title>
     <link rel="icon" type="image/png" href="./assets/icon-192.png" />
     <link rel="apple-touch-icon" href="./assets/icon-192.png" />
-    <script type="module" crossorigin src="./app/index-DoDhtJZf.js"></script>
-    <link rel="stylesheet" crossorigin href="./app/index-qMXvCVGi.css">
+    <script type="module" crossorigin src="./app/index-CznFAHl7.js"></script>
+    <link rel="stylesheet" crossorigin href="./app/index-DIqg0wEz.css">
   <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
   <body>
     <div id="notices" class="notices" role="status"></div>
 
-    <main>
-      <section id="tab-characters" class="tab" hidden>
-        <div class="cards">
-          <div class="card">
-            <label class="well" id="well-A">
-              <input id="file-A" class="visually-hidden" type="file" accept="image/*" />
-              <img id="img-A" alt="Portrait A" hidden />
-              <span class="well-hint">Tap to pick a photo</span>
-            </label>
-            <label class="field">Name<input id="name-A" type="text" maxlength="12" autocomplete="off" autocapitalize="words" /></label>
-            <label class="field">Color<input id="color-A" type="color" /></label>
-          </div>
-          <div class="card">
-            <label class="well" id="well-B">
-              <input id="file-B" class="visually-hidden" type="file" accept="image/*" />
-              <img id="img-B" alt="Portrait B" hidden />
-              <span class="well-hint">Tap to pick a photo</span>
-            </label>
-            <label class="field">Name<input id="name-B" type="text" maxlength="12" autocomplete="off" autocapitalize="words" /></label>
-            <label class="field">Color<input id="color-B" type="color" /></label>
-          </div>
-        </div>
-        <ul id="character-problems" class="issues"></ul>
-      </section>
+    <button id="menu-button" type="button" class="menu-button" aria-label="Menu" aria-expanded="false">
+      <span aria-hidden="true">☰</span>
+    </button>
 
+    <main>
       <section id="tab-lines" class="tab tab-lines" hidden>
-        <div class="row lines-bar">
-          <span class="hint">Hold a face to speak a line, tap it to type one. Hold a line to move it.</span>
-          <span class="spacer"></span>
-          <span id="duration" class="readout" aria-label="Duration">0:00.0</span>
-        </div>
-        <div class="row lines-tools">
-          <button id="stt-toggle" type="button" class="btn" aria-pressed="false">Turn on speech-to-text</button>
-        </div>
-        <ol id="thread" class="thread" aria-label="Lines"></ol>
-        <p id="thread-empty" class="hint thread-empty" hidden>No lines yet.</p>
+        <ol id="thread" class="thread" aria-label="Messages"></ol>
         <ul id="issues" class="issues"></ul>
-        <details id="paste" class="menu">
-          <summary>Paste a script</summary>
-          <p class="hint">One line each, starting with A: or B: or a character's name.</p>
-          <textarea id="paste-text" class="paste" rows="6" spellcheck="false" autocomplete="off" aria-label="Script to paste"></textarea>
-          <ul id="paste-issues" class="issues"></ul>
-          <button id="paste-add" type="button" class="btn">Add as typed lines</button>
-        </details>
 
         <div class="recorder">
           <div class="row status-row">
@@ -68,59 +32,96 @@
           </div>
           <div class="faces">
             <button id="face-A" type="button" class="face">
-              <img id="face-img-A" alt="" hidden />
-              <span id="face-name-A" class="face-name">A</span>
-              <span class="face-meter"><i id="face-level-A"></i></span>
+              <span class="face-photo">
+                <img id="face-img-A" alt="" hidden />
+                <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
+              </span>
+              <span id="face-name-A" class="face-name"></span>
             </button>
-            <button id="mic-toggle" type="button" class="btn mic" aria-pressed="false">Mic off</button>
             <button id="face-B" type="button" class="face">
-              <img id="face-img-B" alt="" hidden />
-              <span id="face-name-B" class="face-name">B</span>
-              <span class="face-meter"><i id="face-level-B"></i></span>
+              <span class="face-photo">
+                <img id="face-img-B" alt="" hidden />
+                <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
+              </span>
+              <span id="face-name-B" class="face-name"></span>
             </button>
+            <button id="mic-start" type="button" class="mic-start">Tap to start</button>
           </div>
         </div>
       </section>
 
-      <section id="tab-preview" class="tab">
+      <section id="tab-preview" class="tab tab-preview" hidden>
         <div class="stage">
-          <canvas id="preview" class="preview" width="1080" height="1920"></canvas>
+          <div class="reel">
+            <canvas id="preview" class="preview" width="1080" height="1920"></canvas>
+            <!-- The characters are edited on the reel itself, while it is paused. -->
+            <div id="cast" class="cast">
+              <label id="pick-A" class="cast-photo A" aria-label="Pick a photo for the left character">
+                <input id="file-A" class="visually-hidden" type="file" accept="image/*" />
+                <span id="plus-A" class="cast-plus" aria-hidden="true">+</span>
+              </label>
+              <label id="pick-B" class="cast-photo B" aria-label="Pick a photo for the right character">
+                <input id="file-B" class="visually-hidden" type="file" accept="image/*" />
+                <span id="plus-B" class="cast-plus" aria-hidden="true">+</span>
+              </label>
+              <button id="edit-A" type="button" class="cast-name A" aria-label="Change the left character's name and colour"></button>
+              <button id="edit-B" type="button" class="cast-name B" aria-label="Change the right character's name and colour"></button>
+            </div>
+          </div>
         </div>
 
         <div class="transport">
           <button id="play" type="button" class="btn">Play</button>
           <input id="scrub" type="range" min="0" max="0" step="1" value="0" aria-label="Frame" />
           <span id="time" class="readout">0:00.0 / 0:00.0</span>
-          <label class="check"><input id="loop" type="checkbox" /> Loop</label>
+          <button id="share" type="button" class="btn primary" disabled>Share</button>
+          <button id="cancel" type="button" class="btn" hidden>Cancel</button>
+          <a id="download" class="btn" hidden>Download</a>
         </div>
-
-        <p id="sound-note" class="status sound-note" role="status" hidden></p>
-
-        <div class="export">
-          <div class="row">
-            <button id="export" type="button" class="btn primary" disabled>Export</button>
-            <button id="cancel" type="button" class="btn" hidden>Cancel</button>
-            <button id="share" type="button" class="btn primary" hidden>Share</button>
-            <a id="download" class="btn" hidden>Download</a>
-          </div>
-          <progress id="progress" max="1" value="0" hidden></progress>
-          <p id="status" class="status" role="status"></p>
-        </div>
-
-        <details class="menu">
-          <summary>Menu</summary>
-          <button id="reset" type="button" class="btn danger">Reset project</button>
-          <!-- Temporary: the phone test pages for the voice version. Remove with lab/ before v2 ships. -->
-          <a id="lab-link" class="btn" href="./lab/index.html">Voice tests</a>
-        </details>
+        <progress id="progress" max="1" value="0" hidden></progress>
+        <p id="status" class="status" role="status"></p>
       </section>
     </main>
 
     <nav class="tabs" aria-label="Sections">
-      <button id="nav-characters" type="button" data-tab="characters">Characters</button>
       <button id="nav-lines" type="button" data-tab="lines">Lines</button>
-      <button id="nav-preview" type="button" data-tab="preview" aria-current="page">Preview</button>
+      <button id="nav-preview" type="button" data-tab="preview">Preview</button>
     </nav>
+
+    <!-- The menu: everything that is used rarely. -->
+    <div id="sheet-menu" class="sheet" hidden>
+      <div class="sheet-card" role="dialog" aria-label="Menu">
+        <details class="sheet-item">
+          <summary>How it works</summary>
+          <ul class="guide">
+            <li>Hold a face and speak to add a spoken message. Tap a face to type one.</li>
+            <li>To make one character cut in on the other, press the second face while you are still holding the first.</li>
+            <li>Tap a message to fix its words.</li>
+            <li>Press and hold a message for its options. Keep holding and drag to move it.</li>
+            <li>On Preview, while paused, tap a portrait to pick a photo and tap a name to change the name and colour.</li>
+          </ul>
+        </details>
+        <details class="sheet-item" id="paste">
+          <summary>Paste a script</summary>
+          <p class="hint">One message per line, starting with A: or B: or a character's name.</p>
+          <textarea id="paste-text" class="paste" rows="6" spellcheck="false" autocomplete="off" aria-label="Script to paste"></textarea>
+          <ul id="paste-issues" class="issues"></ul>
+          <button id="paste-add" type="button" class="btn">Add as typed messages</button>
+        </details>
+        <button id="speech-toggle" type="button" class="btn sheet-item" aria-pressed="false">Speech-to-text: off</button>
+        <button id="reset" type="button" class="btn danger sheet-item">Reset project</button>
+        <button id="menu-close" type="button" class="btn primary sheet-item">Close</button>
+      </div>
+    </div>
+
+    <!-- A character's name and colour. -->
+    <div id="sheet-name" class="sheet" hidden>
+      <div class="sheet-card" role="dialog" aria-label="Name and colour">
+        <label class="field">Name<input id="name-input" type="text" maxlength="12" autocomplete="off" autocapitalize="words" enterkeyhint="done" /></label>
+        <label class="field">Colour<input id="color-input" type="color" /></label>
+        <button id="name-done" type="button" class="btn primary sheet-item">Done</button>
+      </div>
+    </div>
 
   </body>
 </html>
