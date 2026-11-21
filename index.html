@@ -10,8 +10,8 @@
     <title>sAnimator</title>
     <link rel="icon" type="image/png" href="./assets/icon-192.png" />
     <link rel="apple-touch-icon" href="./assets/icon-192.png" />
-    <script type="module" crossorigin src="./app/index-DfVQCJVh.js"></script>
-    <link rel="stylesheet" crossorigin href="./app/index-BEFS-oLc.css">
+    <script type="module" crossorigin src="./app/index-DoDhtJZf.js"></script>
+    <link rel="stylesheet" crossorigin href="./app/index-qMXvCVGi.css">
   <link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
   <body>
     <div id="notices" class="notices" role="status"></div>
@@ -43,9 +43,12 @@
 
       <section id="tab-lines" class="tab tab-lines" hidden>
         <div class="row lines-bar">
-          <span class="hint">Hold a face to speak a line. Tap it to type one.</span>
+          <span class="hint">Hold a face to speak a line, tap it to type one. Hold a line to move it.</span>
           <span class="spacer"></span>
           <span id="duration" class="readout" aria-label="Duration">0:00.0</span>
+        </div>
+        <div class="row lines-tools">
+          <button id="stt-toggle" type="button" class="btn" aria-pressed="false">Turn on speech-to-text</button>
         </div>
         <ol id="thread" class="thread" aria-label="Lines"></ol>
         <p id="thread-empty" class="hint thread-empty" hidden>No lines yet.</p>
@@ -59,7 +62,10 @@
         </details>
 
         <div class="recorder">
-          <p id="lines-status" class="status" role="status"></p>
+          <div class="row status-row">
+            <p id="lines-status" class="status" role="status"></p>
+            <button id="lines-undo" type="button" class="btn" hidden>Undo</button>
+          </div>
           <div class="faces">
             <button id="face-A" type="button" class="face">
               <img id="face-img-A" alt="" hidden />
